@@ -48,9 +48,14 @@ kotlin {
             doLast {
                 val sourceDir = File("build/compileSync/js/main/developmentExecutable", "kotlin")
                 println("sourceDir: $sourceDir")
-                val destDir = File("../harmonyApp/entry/src/main/kotlinjs")
+                val destDir = File("../harmonyApp/entry/src/main/kotlinjs").also {
+                    if(it.exists()) {
+                        it.deleteDirectoryContents()
+                    } else {
+                        it.mkdirs()
+                    }
+                }
                 println("destDir: $destDir")
-                destDir.deleteDirectoryContents()
                 copy {
                     from(sourceDir)
                     into(destDir)
